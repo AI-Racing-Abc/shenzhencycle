@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Shenzhen Cycle — Design in the morning, prototype by afternoon, shipping within a week</title>
+<meta name="description" content="The Shenzhen Cycle is the hardware cadence of Huaqiangbei: design in the morning, prototype by afternoon, production the next day, container on the water within a week. What it is, why it only happens here, and how to plug your product into it.">
+<meta name="keywords" content="Shenzhen Cycle, Shenzhen speed, Huaqiangbei, hardware prototyping Shenzhen, PCB prototype 24 hours, small batch manufacturing Shenzhen, China hardware sourcing, APEC 2026 Shenzhen">
+<link rel="canonical" href="https://shenzhencycle.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Shenzhen Cycle">
+<meta property="og:description" content="Design in the morning. Prototype by afternoon. Production tomorrow. Container on the water within a week.">
+<meta property="og:url" content="https://shenzhencycle.com/">
+<meta property="og:site_name" content="Shenzhen Cycle">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Shenzhen Cycle">
+<meta name="twitter:description" content="The hardware cadence of Huaqiangbei — design in the morning, prototype by afternoon, ship within a week.">
+<meta name="theme-color" content="#05070A">
+<style>
+:root{
+  --ink:#05070A; --panel:#0A0E15; --panel2:#0D131C;
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --cy:#22E0FF; --cy-dim:rgba(34,224,255,.14);
+  --warm:#FFB03A;
+  --txt:#E9EFF6; --mute:#8B97A8; --mute2:#5E6A7A;
+  --max:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--ink); color:var(--txt); line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Inter,Arial,sans-serif;
+  font-feature-settings:"kern" 1,"liga" 1; overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+
+/* ---------- nav ---------- */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,7,10,.72);border-bottom:1px solid var(--line)}
+nav{max-width:var(--max);margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;font-size:15px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--cy);box-shadow:0 0 14px var(--cy)}
+.navlinks{display:flex;gap:26px;font-size:13.5px;color:var(--mute)}
+.navlinks a:hover{color:var(--txt)}
+.navcta{border:1px solid var(--line2);padding:8px 16px;border-radius:999px;font-size:13px;color:var(--txt);transition:.2s}
+.navcta:hover{border-color:var(--cy);color:var(--cy)}
+@media(max-width:820px){.navlinks{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:86px 0 0;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:-40% -20% auto -20%;height:900px;
+  background:radial-gradient(60% 55% at 50% 0%,rgba(34,224,255,.13),transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:88px 88px;opacity:.28;mask-image:radial-gradient(70% 60% at 50% 20%,#000 30%,transparent 78%);
+  pointer-events:none;
+}
+.hero .wrap{position:relative;z-index:2}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--cy);border:1px solid var(--cy-dim);background:rgba(34,224,255,.06);padding:7px 14px;border-radius:999px}
+.eyebrow b{font-weight:600;letter-spacing:.18em}
+h1{
+  font-size:clamp(46px,9.6vw,124px);line-height:.92;letter-spacing:-.045em;font-weight:800;
+  margin:26px 0 0;text-wrap:balance;
+}
+h1 .g{background:linear-gradient(96deg,#fff 20%,var(--cy) 62%,#0FA4BF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{margin-top:26px;max-width:660px;font-size:clamp(16px,2.1vw,19.5px);color:#B9C5D4;line-height:1.66}
+.lede strong{color:#fff;font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:999px;font-size:14.5px;font-weight:600;transition:.2s;border:1px solid transparent}
+.btn-p{background:var(--cy);color:#00161C}
+.btn-p:hover{background:#5CEBFF;box-shadow:0 0 34px rgba(34,224,255,.4)}
+.btn-s{border-color:var(--line2);color:var(--txt)}
+.btn-s:hover{border-color:var(--cy);color:var(--cy)}
+
+/* ---------- ticker ---------- */
+.tick{margin-top:66px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel);overflow:hidden;position:relative;z-index:2}
+.tick-in{display:flex;gap:0;width:max-content;animation:slide 42s linear infinite}
+.tick-in span{display:inline-flex;align-items:center;gap:16px;padding:15px 30px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);border-right:1px solid var(--line);white-space:nowrap}
+.tick-in span b{color:var(--cy);font-weight:600}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.tick-in{animation:none}}
+
+/* ---------- sections ---------- */
+section{padding:96px 0;position:relative}
+.shead{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+.snum{font-size:11.5px;letter-spacing:.22em;color:var(--mute2);text-transform:uppercase}
+h2{font-size:clamp(28px,4.4vw,46px);line-height:1.08;letter-spacing:-.032em;font-weight:750;text-wrap:balance}
+.sub{color:var(--mute);max-width:680px;font-size:16px;margin-top:16px}
+
+/* ---------- definition ---------- */
+.def{background:linear-gradient(180deg,var(--ink),var(--panel) 55%,var(--ink));border-top:1px solid var(--line)}
+.quotecard{margin-top:44px;border:1px solid var(--line);border-left:2px solid var(--cy);background:var(--panel2);padding:34px 34px 30px;border-radius:4px}
+.quotecard p{font-size:clamp(19px,2.7vw,26px);line-height:1.5;letter-spacing:-.014em;color:#fff;font-weight:500}
+.quotecard p em{font-style:normal;color:var(--cy)}
+.src{margin-top:18px;font-size:12.5px;color:var(--mute2);letter-spacing:.02em}
+.fourgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:52px}
+.fourgrid>div{background:var(--ink);padding:28px 22px}
+.fourgrid .k{font-size:clamp(24px,3.4vw,34px);font-weight:750;letter-spacing:-.03em;color:var(--cy);line-height:1}
+.fourgrid .k small{font-size:.5em;font-weight:600;letter-spacing:0;color:var(--mute);margin-left:3px}
+.fourgrid .l{margin-top:10px;font-size:12.5px;color:var(--mute);line-height:1.45}
+@media(max-width:820px){.fourgrid{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- timeline ---------- */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:56px;position:relative}
+.tl::before{content:"";position:absolute;top:11px;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--cy),rgba(34,224,255,.15) 78%,transparent)}
+.tl .step{position:relative;padding-top:40px}
+.tl .step::before{content:"";position:absolute;top:4px;left:0;width:15px;height:15px;border-radius:50%;background:var(--ink);border:2px solid var(--cy);box-shadow:0 0 0 4px rgba(34,224,255,.09)}
+.tl .step:last-child::before{background:var(--cy);box-shadow:0 0 22px rgba(34,224,255,.65)}
+.tl .t{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cy);font-weight:600}
+.tl h3{font-size:19px;letter-spacing:-.018em;margin:9px 0 10px;font-weight:700}
+.tl p{font-size:14px;color:var(--mute);line-height:1.6}
+@media(max-width:900px){.tl{grid-template-columns:1fr;gap:0}.tl::before{left:7px;top:0;bottom:0;right:auto;width:1px;height:auto;background:linear-gradient(180deg,var(--cy),rgba(34,224,255,.12))}.tl .step{padding:0 0 34px 38px}.tl .step::before{top:2px}}
+
+/* ---------- why ---------- */
+.why{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.twocol{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:start;margin-top:44px}
+@media(max-width:900px){.twocol{grid-template-columns:1fr;gap:36px}}
+.why h3{font-size:20px;margin-bottom:14px;letter-spacing:-.02em}
+.why p{color:#B7C3D2;font-size:15.5px;margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-size:12px;color:#A9B6C6;border:1px solid var(--line);background:rgba(255,255,255,.02);padding:6px 12px;border-radius:999px}
+.chip.on{border-color:rgba(34,224,255,.4);color:var(--cy);background:rgba(34,224,255,.06)}
+.mapbox{border:1px solid var(--line);background:linear-gradient(160deg,rgba(34,224,255,.05),transparent 60%);padding:30px;border-radius:4px}
+.mapbox .row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.mapbox .row:last-child{border-bottom:0}
+.mapbox .row span:first-child{color:var(--txt)}
+.mapbox .row span:last-child{color:var(--cy);font-size:12.5px;letter-spacing:.04em;white-space:nowrap}
+
+/* ---------- services ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+@media(max-width:900px){.cards{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);background:var(--panel);padding:32px 26px;border-radius:4px;transition:.22s;position:relative;overflow:hidden}
+.card:hover{border-color:rgba(34,224,255,.4);transform:translateY(-3px);background:var(--panel2)}
+.card .tag{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cy);font-weight:600}
+.card h3{font-size:21px;margin:14px 0 12px;letter-spacing:-.022em;font-weight:700}
+.card p{font-size:14px;color:var(--mute);line-height:1.62;min-height:66px}
+.card ul{list-style:none;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.card li{font-size:13px;color:#B7C3D2;padding:6px 0 6px 18px;position:relative}
+.card li::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;border-radius:50%;background:var(--cy);opacity:.75}
+
+/* ---------- slots / proof ---------- */
+.slots{margin-top:56px;border:1px solid var(--line);background:linear-gradient(100deg,rgba(255,176,58,.07),transparent 55%);padding:30px 34px;border-radius:4px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.slots .big{font-size:15px;color:var(--txt)}
+.slots .big b{color:var(--warm);font-weight:700}
+.slots .note{font-size:12.5px;color:var(--mute2);margin-top:6px}
+
+/* ---------- faq ---------- */
+.faq{background:var(--panel);border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line);padding:22px 0}
+details summary{list-style:none;cursor:pointer;font-size:16.5px;font-weight:600;letter-spacing:-.012em;display:flex;justify-content:space-between;gap:20px;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--cy);font-size:20px;font-weight:400;transition:.2s;flex:0 0 auto}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:14px;font-size:14.5px;color:#A9B6C6;max-width:820px;line-height:1.68}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;padding:110px 0}
+.contact h2{font-size:clamp(30px,5vw,54px)}
+.contact .sub{margin:18px auto 0}
+.mailto{margin-top:32px;display:inline-flex;flex-direction:column;gap:6px;align-items:center}
+.mailto .addr{font-size:clamp(16px,2.6vw,22px);color:var(--cy);letter-spacing:-.01em;border-bottom:1px solid rgba(34,224,255,.35);padding-bottom:4px}
+.mailto .hint{font-size:12px;color:var(--mute2);letter-spacing:.04em}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:40px 0 54px;font-size:12.5px;color:var(--mute2)}
+footer .fgrid{display:flex;justify-content:space-between;gap:26px;flex-wrap:wrap}
+footer a{color:var(--mute)}
+footer a:hover{color:var(--cy)}
+footer .disc{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);max-width:860px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="#top"><span class="dot"></span>Shenzhen&nbsp;Cycle</a>
+    <div class="navlinks">
+      <a href="#what">What it is</a>
+      <a href="#how">How it runs</a>
+      <a href="#why">Why here</a>
+      <a href="#services">Work with us</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="navcta" href="#contact">Start a build</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="wrap">
+      <span class="eyebrow"><b>SHENZHEN</b> &nbsp;/&nbsp; APEC 2026</span>
+      <h1>Design in the<br>morning. <span class="g">Ship<br>within a week.</span></h1>
+      <p class="lede">The <strong>Shenzhen Cycle</strong> is the hardware cadence of Huaqiangbei: a product is designed before lunch, prototyped by the afternoon, tooled overnight, and on a container ship inside seven days. Not a slogan — a working schedule, run by people who live inside the supply chain.</p>
+      <div class="actions">
+        <a class="btn btn-p" href="#contact">Start a build &rarr;</a>
+        <a class="btn btn-s" href="#what">What is the Shenzhen Cycle?</a>
+      </div>
+    </div>
+    <div class="tick">
+      <div class="tick-in">
+        <span><b>12h</b> PCB turnaround</span><span><b>5h</b> 3D print</span><span><b>48h</b> first physical sample</span><span><b>7d</b> factory to freight</span><span><b>1.5km</b> whole supply chain</span>
+        <span><b>12h</b> PCB turnaround</span><span><b>5h</b> 3D print</span><span><b>48h</b> first physical sample</span><span><b>7d</b> factory to freight</span><span><b>1.5km</b> whole supply chain</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="def" id="what">
+    <div class="wrap">
+      <div class="shead"><span class="snum">01 &mdash; Definition</span></div>
+      <h2>One sentence, four clocks.</h2>
+      <p class="sub">The term entered Chinese manufacturing vocabulary in 2026, describing what happens around Huaqiangbei — the electronics market district in Futian, Shenzhen — where an idea can be turned into a shipped product faster than most companies can schedule a meeting about it.</p>
+
+      <div class="quotecard">
+        <p>&ldquo;Shenzhen&rsquo;s Huaqiangbei creates the <em>&lsquo;Shenzhen Cycle&rsquo;</em>: design in the morning, sample in the afternoon, volume production the next day, overseas shipment within a week.&rdquo;</p>
+        <div class="src">Source: Tencent News, <em>Where does the resilience of Guangdong manufacturing come from?</em>, 7 September 2026 &nbsp;·&nbsp; original: 「上午设计、下午打样、次日量产、一周出海」</div>
+      </div>
+
+      <div class="fourgrid">
+        <div><div class="k">12<small>h</small></div><div class="l">PCB fabrication and<br>assembly turnaround</div></div>
+        <div><div class="k">5<small>h</small></div><div class="l">3D-printed enclosure<br>in your hand</div></div>
+        <div><div class="k">48<small>h</small></div><div class="l">Artisan-toy class<br>first sample</div></div>
+        <div><div class="k">1&ndash;2<small>w</small></div><div class="l">Humanoid robot<br>working prototype</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="shead"><span class="snum">02 &mdash; The cycle</span></div>
+      <h2>What a week actually looks like.</h2>
+      <p class="sub">Every stage below is a different supplier, a different building, usually a different street. The reason the cycle works is not speed at any single step — it is that there is almost no distance between the steps.</p>
+
+      <div class="tl">
+        <div class="step">
+          <div class="t">Morning &mdash; Day 1</div>
+          <h3>Design lock</h3>
+          <p>Schematic review, CAD cleanup, BOM scrubbing. Parts are checked against what is physically on the shelves in the district, not against a distributor&rsquo;s lead time.</p>
+        </div>
+        <div class="step">
+          <div class="t">Afternoon &mdash; Day 1</div>
+          <h3>Prototype</h3>
+          <p>PCB out of fab the same day, printed housing off the machine in five hours, hand-soldered on a bench and powered on before the day ends.</p>
+        </div>
+        <div class="step">
+          <div class="t">Day 2</div>
+          <h3>Tooling &amp; first batch</h3>
+          <p>DFM feedback, mould or CNC run, SMT line time booked overnight. This is where projects from other regions lose three weeks.</p>
+        </div>
+        <div class="step">
+          <div class="t">Within 7 days</div>
+          <h3>Export</h3>
+          <p>Documentation, packing, customs, and freight out of Yantian or Shenzhen Bao&rsquo;an. Goods leave the city before the design file is a month old.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why" id="why">
+    <div class="wrap">
+      <div class="shead"><span class="snum">03 &mdash; Why here</span></div>
+      <h2>It is a radius problem,<br>not a talent problem.</h2>
+      <div class="twocol">
+        <div>
+          <h3>Everything is within walking distance</h3>
+          <p>Components, PCB shops, mould makers, SMT lines, assembly benches, packaging, and freight forwarders sit inside a few square kilometres. When a part is wrong you walk to the counter and swap it. When a tolerance is off you drive the sample over and stand next to the machine.</p>
+          <p>That is why the cycle cannot be copied by hiring faster engineers. It is a geographic density that took forty years to build, and it is the reason Guangdong holds every one of the 31 manufacturing categories in China&rsquo;s industrial classification.</p>
+          <h3 style="margin-top:28px">And we live in it</h3>
+          <p>This site is run out of Huaqiangbei. Not a trading company relaying messages to a factory two provinces away — the person answering your email can walk to the line.</p>
+          <div class="chips">
+            <span class="chip on">Huaqiangbei, Futian</span>
+            <span class="chip">PCB &amp; PCBA</span>
+            <span class="chip">Tooling &amp; injection</span>
+            <span class="chip">SMT</span>
+            <span class="chip">CNC</span>
+            <span class="chip">Packaging</span>
+            <span class="chip">Export &amp; freight</span>
+          </div>
+        </div>
+        <div class="mapbox">
+          <div class="row"><span>Component sourcing</span><span>same district</span></div>
+          <div class="row"><span>PCB fabrication</span><span>12&ndash;24 hours</span></div>
+          <div class="row"><span>3D printing</span><span>5 hours</span></div>
+          <div class="row"><span>Mould &amp; tooling</span><span>3&ndash;7 days</span></div>
+          <div class="row"><span>SMT assembly</span><span>24&ndash;48 hours</span></div>
+          <div class="row"><span>Packaging</span><span>2&ndash;3 days</span></div>
+          <div class="row"><span>Freight out</span><span>same week</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="shead"><span class="snum">04 &mdash; Work with us</span></div>
+      <h2>Three ways to plug in.</h2>
+      <p class="sub">Built for overseas founders, indie hardware developers and Amazon sellers who have a design file and no factory relationship. You talk to one person; that person walks the district.</p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="tag">Prototype sprint</div>
+          <h3>Idea to working unit</h3>
+          <p>Send a schematic, a CAD file or even a sketch and a spec. You get a physical, powered, tested unit — not a render.</p>
+          <ul>
+            <li>1&ndash;5 units</li>
+            <li>5&ndash;10 working days</li>
+            <li>BOM sourced locally</li>
+            <li>Photo and video test report</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="tag">Small batch</div>
+          <h3>Prototype to shelf</h3>
+          <p>DFM review before tooling so you do not pay for a mould twice. Runs sized for a first production order, not a container minimum.</p>
+          <ul>
+            <li>50&ndash;500 units</li>
+            <li>Tooling + SMT + assembly</li>
+            <li>Incoming inspection</li>
+            <li>Retail-ready packaging</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="tag">Sourcing &amp; export</div>
+          <h3>Parts to port</h3>
+          <p>Hard-to-find components traced through the market, plus the paperwork and freight that turns finished goods into a delivered shipment.</p>
+          <ul>
+            <li>Obsolete &amp; end-of-life parts</li>
+            <li>Counterfeit screening</li>
+            <li>Export docs &amp; HS codes</li>
+            <li>Air, sea, or DDP options</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="slots">
+        <div>
+          <div class="big">Taking <b>five builds</b> for December 2026.</div>
+          <div class="note">One build slot per project. First reply usually within 24 hours, Shenzhen time.</div>
+        </div>
+        <a class="btn btn-p" href="#contact">Request a slot &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="shead"><span class="snum">05 &mdash; Questions</span></div>
+      <h2>Before you write.</h2>
+      <div style="margin-top:36px">
+        <details open>
+          <summary>Is the Shenzhen Cycle a real term, or marketing?</summary>
+          <p>It is a real phrase, coined in Chinese — 深圳周期 — to describe the manufacturing cadence around Huaqiangbei. It was used in Chinese reporting in September 2026 ahead of the APEC leaders&rsquo; meeting in Shenzhen. This site is an independent attempt to carry the term into English and to document what it takes to operate at that speed. We are not affiliated with APEC, the municipal government, or any industry association.</p>
+        </details>
+        <details>
+          <summary>How fast can a prototype really be done?</summary>
+          <p>For a small electronics board with a printed housing, 3&ndash;7 working days is realistic end to end, and the PCB alone can be back in 12&ndash;24 hours. Anything with a custom injection mould, certification testing, or a battery pack moves to weeks. Anyone promising a moulded, certified product in a week is skipping a step you will pay for later.</p>
+        </details>
+        <details>
+          <summary>What is the minimum order quantity?</summary>
+          <p>Prototype work starts at one unit. Small-batch production typically starts around 50 units, depending on the process. We will tell you when a quantity is too low to be worth tooling and suggest a CNC or 3D-printed run instead.</p>
+        </details>
+        <details>
+          <summary>Do you handle export, customs and delivery?</summary>
+          <p>Yes. We prepare commercial invoices, packing lists and HS codes, and can quote air freight, sea freight to your port, or DDP to your door. We do not act as importer of record — duties and local compliance stay on your side unless agreed in writing.</p>
+        </details>
+        <details>
+          <summary>Can you work with us entirely remotely?</summary>
+          <p>Most of our projects are remote. Design reviews run over video, and inspection is documented with photos and video at each stage. If you can visit Shenzhen, one day in the district with us compresses about a month of email.</p>
+        </details>
+        <details>
+          <summary>What do you need from me to quote?</summary>
+          <p>Three things: what the product does, what files you have (schematic, CAD, BOM, or none), and your target quantity and date. If you have none of the files, say so — that is a normal starting point, and the quote will include design support.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <span class="eyebrow"><b>OPEN</b> &nbsp;/&nbsp; DEC 2026 SLOTS</span>
+      <h2 style="margin-top:24px">Tell us what you need built.</h2>
+      <p class="sub">One paragraph is enough. Product, files, quantity, deadline. We reply from Shenzhen, usually within one working day.</p>
+      <div class="mailto">
+        <a class="addr" href="mailto:linjinfeng@yeah.net?subject=Build%20enquiry%20%E2%80%94%20Shenzhen%20Cycle">linjinfeng@yeah.net</a>
+        <span class="hint">SHENZHEN, CHINA &nbsp;·&nbsp; GMT+8</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><strong style="color:var(--txt)">Shenzhen Cycle</strong> &nbsp;·&nbsp; shenzhencycle.com</div>
+      <div><a href="#what">Definition</a> &nbsp;·&nbsp; <a href="#how">The cycle</a> &nbsp;·&nbsp; <a href="#services">Work with us</a> &nbsp;·&nbsp; <a href="#faq">FAQ</a></div>
+    </div>
+    <div class="disc">Independent project documenting the manufacturing cadence of Huaqiangbei, Shenzhen. Not affiliated with APEC, the Shenzhen municipal government, or any chamber of commerce. Figures quoted for PCB, 3D printing and sampling turnaround reflect published Chinese manufacturing reporting from September 2026; your own timeline depends on the process and the part.</div>
+    <div style="margin-top:18px">&copy; 2026 Shenzhen Cycle</div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebSite",
+      "@id":"https://shenzhencycle.com/#website",
+      "url":"https://shenzhencycle.com/",
+      "name":"Shenzhen Cycle",
+      "inLanguage":"en",
+      "description":"The hardware cadence of Huaqiangbei, Shenzhen: design in the morning, prototype by afternoon, production the next day, shipped within a week."
+    },
+    {
+      "@type":"Organization",
+      "@id":"https://shenzhencycle.com/#org",
+      "name":"Shenzhen Cycle",
+      "url":"https://shenzhencycle.com/",
+      "email":"linjinfeng@yeah.net",
+      "address":{"@type":"PostalAddress","addressLocality":"Shenzhen","addressRegion":"Guangdong","addressCountry":"CN"},
+      "description":"Prototype sprints, small-batch manufacturing, component sourcing and export support, run from Huaqiangbei, Shenzhen."
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"Is the Shenzhen Cycle a real term, or marketing?","acceptedAnswer":{"@type":"Answer","text":"It is a real phrase, coined in Chinese (深圳周期) to describe the manufacturing cadence around Huaqiangbei, used in Chinese reporting in September 2026 ahead of the APEC leaders' meeting in Shenzhen. This site is an independent attempt to carry the term into English."}},
+        {"@type":"Question","name":"How fast can a prototype really be done?","acceptedAnswer":{"@type":"Answer","text":"For a small electronics board with a printed housing, 3 to 7 working days end to end is realistic; the PCB alone can be back in 12 to 24 hours. Custom moulds, certification or battery packs move the timeline to weeks."}},
+        {"@type":"Question","name":"What is the minimum order quantity?","acceptedAnswer":{"@type":"Answer","text":"Prototype work starts at one unit. Small-batch production typically starts around 50 units depending on process."}},
+        {"@type":"Question","name":"Do you handle export, customs and delivery?","acceptedAnswer":{"@type":"Answer","text":"Yes: commercial invoices, packing lists, HS codes, and air or sea freight quotes, including DDP to your door."}}
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>
